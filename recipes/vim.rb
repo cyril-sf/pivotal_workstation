@@ -17,7 +17,7 @@ unless ( File.exists?("/usr/local/bin/vim") and File.exists?("/Applications/MacV
 
   execute "install-vim" do
     user WS_USER
-    command "brew install https://raw.github.com/Homebrew/homebrew-dupes/c93e84ace76c58ae2386c439040110b57e510f04/vim.rb"
+    command "brew install vim"
   end
 
   execute "brew-uninstall-macvim" do
