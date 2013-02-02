@@ -17,7 +17,8 @@ unless ( File.exists?("/usr/local/bin/vim") and File.exists?("/Applications/MacV
 
   execute "install-vim" do
     user WS_USER
-    command "brew install vim"
+    command "rvm use system; brew install vim"
+    not_if "brew list | grep '^vim$'"
   end
 
   execute "brew-uninstall-macvim" do
@@ -90,9 +91,9 @@ unless ( File.exists?("/usr/local/bin/vim") and File.exists?("/Applications/MacV
     command %{test "`otool -l #{node["vim_home"]}/bundle/command-t/ruby/command-t/ext.bundle | grep libruby`" = "`otool -l /usr/local/bin/vim | grep libruby`"}
   end
 
-  execute "verify-that-command-t-is-correctly-compiled-for-mvim" do
-    command %{test "`otool -l #{node["vim_home"]}/bundle/command-t/ruby/command-t/ext.bundle | grep libruby`" = "`otool -l /Applications/MacVim.app/Contents/MacOS/Vim | grep libruby`"}
-  end
+  # execute "verify-that-command-t-is-correctly-compiled-for-mvim" do
+  #  command %{test "`otool -l #{node["vim_home"]}/bundle/command-t/ruby/command-t/ext.bundle | grep libruby`" = "`otool -l /Applications/MacVim.app/Contents/MacOS/Vim | grep libruby`"}
+  # end
 
   file "/Users/#{WS_USER}/.vimrc.local" do
     action :touch
